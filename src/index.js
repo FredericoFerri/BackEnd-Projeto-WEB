@@ -1,6 +1,10 @@
+const dotenv = require("dotenv");
 const app = require("./app");
 const Loaders = require("./Loaders/index");
 
+dotenv.config();
 Loaders.start();
 
-app.listen(8000, () => console.log("Servidor rodando!"));
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => console.log("Servidor rodando!"));

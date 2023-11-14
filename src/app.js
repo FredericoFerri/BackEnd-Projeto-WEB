@@ -13,7 +13,3 @@ app.use("*", (req, res) => {
 });
 
 module.exports = app;
-
-//DpkuFeYypTO4TdrK
-
-//mongodb+srv://fredericoferri:<password>@projetoweb.pqwji14.mongodb.net/?retryWrites=true&w=majority
