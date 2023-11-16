@@ -24,7 +24,10 @@ const create = validateRequest({
 const destroy = validateRequest({
   //Validar os parâmetros
   params: z.object({
-    id: z.custom(mongoose.isValidObjectId, "O id da sessão não é válido"),
+    id_usuarios: z.custom(
+      mongoose.isValidObjectId,
+      "O id do usuário não é válido"
+    ),
   }),
 });
 module.exports = { create, destroy };

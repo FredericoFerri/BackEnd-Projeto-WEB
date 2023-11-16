@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { string } = require("zod");
 const bcrypt = require("bcrypt");
+const SessoesModel = require("./SessoesModel");
 
 const Schema = mongoose.Schema;
 
@@ -23,18 +24,30 @@ const UsuarioSchema = new Schema({
 
 UsuarioSchema.pre("save", async function (next) {
   //Função executada antes de se salvar um novo usuário
-  const user = this;
+  const usuario = this;
 
-  if (user.isModified("senha_usuario")) {
+  //Alteração aqui!
+  if (usuario.isModified("senha_usuario")) {
     const salt = await bcrypt.genSalt(); //Criando a base da criptografia
-    const hash = await bcrypt.hash(user.senha_usuario, salt); //Criptografia de senha_usuario
+    const hash = await bcrypt.hash(usuario.senha_usuario, salt); //Criptografia de senha_usuario
 
-    user.senha_usuario = hash;
+    usuario.senha_usuario = hash;
 
     //console.log({ salt, hash });
   }
   next();
 });
+
+UsuarioSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function () {
+    //Função para deletar qualquer sessão associada a um usuário a ser deletado
+    const usuario = this; //Usuário a ser deletado
+
+    return SessoesModel.deleteOne({ id_usuarios: usuario._id }); //Deletando a sessão referente ao id do user a ser deletado
+  }
+);
 
 const UsuarioModel = mongoose.model("Usuarios", UsuarioSchema);
 
