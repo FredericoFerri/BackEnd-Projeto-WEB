@@ -65,7 +65,7 @@ class UsuarioController {
 
       //Verificação de existência de usuário na database:
       //-----------------------------------------------------------
-      const usuarioEncontrado = await UsuarioModel.findById(id); //Procura por usuário na database
+      const usuarioEncontrado = await UsuarioModel.findById(id);
 
       if (!usuarioEncontrado) {
         //Usuário não encontrado na base de dados
@@ -73,7 +73,7 @@ class UsuarioController {
       }
       //-----------------------------------------------------------
 
-      await UsuarioModel.findByIdAndDelete(id); //Deleta usuários por id
+      await usuarioEncontrado.deleteOne(); //Deleta usuários por id
 
       return res.status(200).json("mensagem: Usuario deletado com sucesso!"); //Retorno de status do usuário - Deletado com sucesso
     } catch (error) {

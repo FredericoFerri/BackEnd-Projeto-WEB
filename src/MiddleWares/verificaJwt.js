@@ -25,16 +25,14 @@ function verificaJwt(req, res, next) {
   }
 
   //Teste de validação de token
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, usuario) => {
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
     if (err) {
       return res.status(403).json({ message: "Token JWT inválido!" });
     }
 
-    req.usuarioId = usuario._id;
-    next();
+    req.usuarioId = decoded.usuario._id;
   });
-
-  //console.log({ bearer, token });
+  next();
 }
 
 module.exports = verificaJwt;

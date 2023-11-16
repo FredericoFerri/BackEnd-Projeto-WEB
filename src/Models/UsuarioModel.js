@@ -45,6 +45,7 @@ UsuarioSchema.pre(
     //Função para deletar qualquer sessão associada a um usuário a ser deletado
     const usuario = this; //Usuário a ser deletado
 
+    console.log("Sessão de usuário ${usuario._id} a ser deletada!");
     return SessoesModel.deleteOne({ id_usuarios: usuario._id }); //Deletando a sessão referente ao id do user a ser deletado
   }
 );
